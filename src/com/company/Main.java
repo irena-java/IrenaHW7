@@ -1,43 +1,23 @@
-/*Домашка 7. 2) Найти количество счастливых билетиков на трамвай от 000001 до 999999
-(те у которых сумма первых 3 цифр равна сумме последних 3*/
+/*Домашка 7. 1) Электронные часы показывают время в формате от 00:00 до 23:59.
+Подсчитать сколько раз за сутки случается так, что слева от двоеточия показывается симметричная
+комбинация для той, что справа от двоеточия (например, 02:20, 11:11 или 15:51).*/
 
 package com.company;
 
 public class Main {
     public static void main(String[] args) {
-        int happy = 0;
-        int sumLeft = 0;
-        int sumRight = 0;
-        String ticketNice, left, right;
-        for (int ticket = 1; ticket <= 999999; ticket++) {
-            ticketNice = Integer.toString(ticket);
-            ticketNice = leadingZero(ticketNice, 6);
-            left = ticketNice.substring(0, 3);
-            right = ticketNice.substring(3, 6);
-            sumLeft = sumOfDigits(left);
-            sumRight = sumOfDigits(right);
-            if (sumLeft == sumRight) {
-                System.out.println(ticketNice);
-                happy++;
+        int countTwins = 0;
+        String left;
+        String rightMirrow;
+        for (int hours = 0; hours <= 23; hours++) {
+            for (int minutes = 0; minutes <= 59; minutes++) {
+                left = Integer.toString(hours / 10) + Integer.toString(hours % 10);
+                rightMirrow = Integer.toString(minutes % 10) + Integer.toString(minutes / 10);
+                if (left.equals(rightMirrow)) {
+                    countTwins++;
+                    System.out.println(left + " " + rightMirrow.charAt(1) + rightMirrow.charAt(0));
+                }
             }
         }
-        System.out.println("Количество счастливых билетов:" + happy);
-    }
-
-    private static int sumOfDigits(String str) {
-        char[] digits = str.toCharArray();
-        int sum = 0;
-        for (int i = 0; i < digits.length; i++) {
-            sum = sum + digits[i];
-        }
-        return sum;
-    }
-
-    private static String leadingZero(String str, int maxLength) {
-        String zeros = "";
-        for (int i = 0; i < maxLength - str.length(); i++) {
-            zeros = "0" + zeros;
-        }
-        return zeros + str;
     }
 }
